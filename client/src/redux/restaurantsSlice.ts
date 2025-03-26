@@ -10,6 +10,10 @@ interface Restaurant {
   distance: number;
   photoUrl: string | null;
   place_id: string; // Add place_id here
+  location: { 
+    lat: number; 
+    lng: number; 
+  };
 }
 
 interface RestaurantsState {

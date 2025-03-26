@@ -4,11 +4,11 @@ import { TypeAnimation } from "react-type-animation";
 // Header with a dynamic type animation
 const Header: React.FC = () => {
   return (
-    <header className=" mx-1 my-5 p-4 flex justify-between items-center">
+    <header className=" bg-[#636363] text-white p-4 flex justify-between items-center">
       {/* <h1 className="text-xl font-bold">Restaurant Hunter</h1> */}
       <div
         // href="/"
-        className="text-sm font-semibold bg-[#2B241F] rounded-md p-1"
+        className="text-sm font-semibold bg-[#222831] rounded-md p-1"
       >
         <span className="text-white mr-1">Restaurant</span>
         <span className=" w-12 h-8 rounded bg-neutral-100 px-1 text-neutral-700 font-bold">

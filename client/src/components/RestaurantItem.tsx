@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-comment-textnodes */
-
 import React from "react";
 import defaultImage from "../images/def-restaurant.jpg";
 
@@ -13,7 +11,6 @@ interface RestaurantItemProps {
   placeId: string;
 }
 
-// Component to display individual restaurant information
 const RestaurantItem: React.FC<RestaurantItemProps> = ({
   name,
   vicinity,
@@ -24,6 +21,31 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
   placeId,
 }) => {
   const googleMapsUrl = `https://www.google.com/maps/place/?q=place_id:${placeId}`;
+
+  const handleShare = async () => {
+    const shareData = {
+      title: name,
+      text: `Check out ${name} located at ${vicinity} with a rating of ${rating} (${userRatingsTotal} reviews).`,
+      url: googleMapsUrl,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        console.log("Shared successfully!");
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      // Fallback: copy URL to clipboard
+      try {
+        await navigator.clipboard.writeText(googleMapsUrl);
+        alert("Link copied to clipboard!");
+      } catch (error) {
+        console.error("Failed to copy:", error);
+      }
+    }
+  };
 
   return (
     <div className="flex flex-row justify-center">
@@ -46,7 +68,7 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
         <p className="text-gray-600">
           Rating: {rating} ({userRatingsTotal} reviews)
         </p>
-        <p className=" text-gray-900 font-semibold">
+        <p className="text-gray-900 font-semibold">
           Distance: {distance.toFixed(2)} km
         </p>
         <a
@@ -57,6 +79,12 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
         >
           View on Google Maps
         </a>
+        <button
+          onClick={handleShare}
+          className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Share
+        </button>
       </div>
     </div>
   );
