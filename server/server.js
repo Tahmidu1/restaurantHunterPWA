@@ -122,6 +122,10 @@ app.get("/api/places", async (req, res) => {
         ),
         photoUrl,
         place_id: restaurant.place_id,
+        location: {
+          lat: restaurant.geometry.location.lat,
+          lng: restaurant.geometry.location.lng,
+        },
       };
     });
 
