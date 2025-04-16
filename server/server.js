@@ -38,52 +38,6 @@ const haversineDistance = (coords1, coords2) => {
   return d;
 };
 
-// app.get("/api/places", async (req, res) => {
-//   try {
-//     const { lat, lng } = req.query;
-//     const response = await axios.get(
-//       "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
-//       {
-//         params: {
-//           location: `${lat},${lng}`,
-//           radius: 1500,
-//           type: "restaurant",
-//           key: process.env.REACT_APP_GOOGLE_PLACES_API_KEY,
-//         },
-//       }
-//     );
-
-//     const restaurants = response.data.results.map((restaurant) => {
-//       const photoUrl = restaurant.photos
-//         ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${restaurant.photos[0].photo_reference}&key=${process.env.REACT_APP_GOOGLE_PLACES_API_KEY}`
-//         : null;
-//       return {
-//         name: restaurant.name,
-//         vicinity: restaurant.vicinity,
-//         rating: restaurant.rating,
-//         user_ratings_total: restaurant.user_ratings_total,
-//         distance: haversineDistance(
-//           { lat: parseFloat(lat), lng: parseFloat(lng) },
-//           {
-//             lat: restaurant.geometry.location.lat,
-//             lng: restaurant.geometry.location.lng,
-//           }
-//         ),
-//         photoUrl,
-//       };
-//     });
-
-//     // Sort restaurants by distance and return top 10
-//     const sortedRestaurants = restaurants
-//       .sort((a, b) => a.distance - b.distance)
-//       .slice(0, 10);
-
-//     res.json(sortedRestaurants);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
 app.get("/api/places", async (req, res) => {
   try {
     const { lat, lng, keyword } = req.query;

@@ -3,7 +3,6 @@ export interface SWConfig {
     onSuccess?: (registration: ServiceWorkerRegistration) => void;
   }
   
-  // 2. Example isLocalhost check (unchanged)
   const isLocalhost = Boolean(
     window.location.hostname === "localhost" ||
       window.location.hostname === "[::1]" ||
@@ -12,7 +11,6 @@ export interface SWConfig {
       )
   );
   
-  // 3. Use the SWConfig interface for config in your register function
   export function register(config?: SWConfig) {
     if (
       process.env.NODE_ENV === "production" &&
@@ -43,18 +41,7 @@ export interface SWConfig {
         }
       });
     }
-/*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Registers a valid service worker, and if successful, sets up a push
-   * subscription to allow the user to be notified when the app is updated.
-   *
-   * @param {string} swUrl The URL of the service worker to register.
-   * @param {Object} config An object with an `onUpdate` property, which is a
-   * function that will be called when the service worker has been updated.
-   * The function will be called with the registration object as its only
-   * argument.
-   */
-/******  8716f501-dde1-4260-919b-43ec72ff2b85  *******/  }
+  }
   
   function registerValidSW(swUrl: string, config?: SWConfig) {
     navigator.serviceWorker
