@@ -20,7 +20,10 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
   photoUrl,
   placeId,
 }) => {
+  // URL to view the place on Google Maps
   const googleMapsUrl = `https://www.google.com/maps/place/?q=place_id:${placeId}`;
+  // URL to leave a review on Google Maps
+  const googleReviewsUrl = `https://search.google.com/local/writereview?placeid=${placeId}`;
 
   const handleShare = async () => {
     const shareData = {
@@ -37,7 +40,6 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
         console.error("Error sharing:", error);
       }
     } else {
-      // Fallback: copy URL to clipboard
       try {
         await navigator.clipboard.writeText(googleMapsUrl);
         alert("Link copied to clipboard!");
@@ -47,22 +49,19 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
     }
   };
 
+  const handleLeaveReview = () => {
+    // Open the Google Maps review page in a new tab
+    window.open(googleReviewsUrl, "_blank");
+  };
+
   return (
     <div className="flex flex-row justify-center">
       <div className="p-3 bg-white m-2 shadow-md rounded-md w-80 hover:scale-105 transition ease-in-out">
         <h3 className="text-lg font-semibold mb-1">{name}</h3>
         {photoUrl ? (
-          <img
-            className="w-full h-48 object-cover rounded-md"
-            src={photoUrl}
-            alt={name}
-          />
+          <img className="w-full h-48 object-cover rounded-md" src={photoUrl} alt={name} />
         ) : (
-          <img
-            className="w-full h-48 object-cover rounded-md"
-            src={defaultImage}
-            alt="Default"
-          />
+          <img className="w-full h-48 object-cover rounded-md" src={defaultImage} alt="Default" />
         )}
         <p className="text-gray-600 mt-1">{vicinity}</p>
         <p className="text-gray-600">
@@ -79,11 +78,17 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
         >
           View on Google Maps
         </a>
-        <button
-          onClick={handleShare}
-          className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        <button 
+          onClick={handleShare} 
+          className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-2"
         >
           Share
+        </button>
+        <button 
+          onClick={handleLeaveReview} 
+          className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-green-600"
+        >
+          Leave a Review
         </button>
       </div>
     </div>

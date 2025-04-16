@@ -1,15 +1,18 @@
 import React from "react";
-import RestaurantList from "./components/RestaurantList";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import { Routes, Route } from "react-router-dom";
+
+// Import the new page components
+import Home from "./pages/Home";
+import RestaurantPage from "./pages/RestaurantPage";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <RestaurantList />
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/restaurants" element={<RestaurantPage />} />
+      <Route path="/contact" element={<Contact />} />
+    </Routes>
   );
 }
 

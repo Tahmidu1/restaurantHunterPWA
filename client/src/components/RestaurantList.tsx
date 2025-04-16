@@ -18,10 +18,10 @@ import defaultImage from "../images/menuplate.jpg";
 const apiKey = process.env.REACT_APP_GOOGLE_PLACES_API_KEY || "";
 const mapId = process.env.REACT_APP_MAP_ID || "";
 
-// The available cuisine checkboxes (customize as needed)
+// cuisine checkboxes
 const CUISINES = ["chinese", "indian", "italian", "japanese", "seafood"];
 
-// The available rating checkboxes (1★ to 5★)
+//rating checkboxes
 const RATINGS = [1, 2, 3, 4, 5];
 
 const RestaurantList: React.FC = () => {
@@ -30,26 +30,23 @@ const RestaurantList: React.FC = () => {
     (state) => state.restaurants
   );
 
-  // User location & selected place
+  // User location and selected place
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
     null
   );
   const [selectedPlace, setSelectedPlace] =
     useState<google.maps.places.PlaceResult | null>(null);
 
-  // We no longer need a single marker ref because we'll render multiple markers
-  // const [markerRef, marker] = useAdvancedMarkerRef();
-
-  // Controls whether to show the hero’s background image overlay
+  // Controls background image overlay
   const [showStaticImage, setShowStaticImage] = useState(true);
 
-  // Cuisine filters (array of selected cuisines)
+  // Cuisine filters
   const [selectedCuisines, setSelectedCuisines] = useState<string[]>([]);
 
-  // Rating filters (array of selected rating values)
+  // Rating filters
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
 
-  // Fetch restaurants when location or cuisines change (ratings are filtered client-side)
+  // Fetch restaurants
   useEffect(() => {
     if (location) {
       const keyword =
@@ -85,7 +82,7 @@ const RestaurantList: React.FC = () => {
     }
   };
 
-  // Reset everything
+  // Reset
   const handleReset = () => {
     setLocation(null);
     setSelectedPlace(null);
@@ -95,7 +92,7 @@ const RestaurantList: React.FC = () => {
     dispatch(resetRestaurants());
   };
 
-  // Client-side rating filter: only display restaurants whose floor rating matches
+  //display restaurants based on rating matches
   const displayedRestaurants = rawRestaurants.filter((r) => {
     if (selectedRatings.length > 0) {
       const floorRating = Math.floor(r.rating || 0);
@@ -131,7 +128,7 @@ const RestaurantList: React.FC = () => {
         className="hero min-h-[30vh] bg-cover bg-center relative"
         style={
           showStaticImage
-            ? { backgroundImage: `url(${defaultImage})` }
+            ? { backgroundImage: `url(${defaultImage})`, }
             : {}
         }
       >
@@ -165,9 +162,9 @@ const RestaurantList: React.FC = () => {
 
       {/* 2) MAIN CONTENT SECTION: Filter Panel and Restaurant List */}
       <div className="bg-[#636363] py-8">
-        <div className="max-w-7xl mx-auto px-4 flex gap-6">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-6 items-start">
           {/* LEFT COLUMN: Filter Panel */}
-          <div className="w-1/4 bg-[#222831] p-4">
+          <div className="bg-[#222831] p-2 sm:p-4 w-full sm:w-[40%] md:w-1/4 mx-auto md:mx-0">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-bold text-white">Filter</h2>
               <button
@@ -215,15 +212,19 @@ const RestaurantList: React.FC = () => {
           </div>
 
           {/* RIGHT COLUMN: Restaurant List */}
-          <div className="w-3/4">
+          <div className="w-full md:w-3/4">
             {status === "loading" && <p>Loading...</p>}
             {status === "failed" && <p>{error}</p>}
 
             {status === "succeeded" && displayedRestaurants.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {displayedRestaurants.map((restaurant, index) => (
+                  
+                <div
+                  key={index}
+                  className="bg-white shadow-md rounded-md p-2 sm:p-3 m-2 w-full sm:w-[90%] md:w-auto mx-auto md:mx-0"
+                >
                   <RestaurantItem
-                    key={index}
                     name={restaurant.name}
                     vicinity={restaurant.vicinity}
                     rating={restaurant.rating}
@@ -232,6 +233,7 @@ const RestaurantList: React.FC = () => {
                     photoUrl={restaurant.photoUrl || undefined}
                     placeId={restaurant.place_id}
                   />
+                </div>  
                 ))}
               </div>
             )}
@@ -245,7 +247,7 @@ const RestaurantList: React.FC = () => {
         </div>
       </div>
 
-      {/* 3) MAP SECTION: Render multiple markers for each restaurant */}
+      {/* 3) MAP SECTION: Renders multiple markers for each restaurant */}
       <div className="flex justify-center items-center">
         <APIProvider apiKey={apiKey}>
         <Map
