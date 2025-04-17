@@ -18,6 +18,8 @@ To run this project locally, ensure you have:
 
 ## 🔐 Environment Variable Setup
 
+### For this make sure your Google Places API and Google Maps Javascript API is in the same API Key. Also, make sure to put that API key under 'REACT_APP_GOOGLE_PLACES_API_KEY' as per steps below
+
 ### `server/.env`
 
 Create a `.env` file in the `server` directory with:
